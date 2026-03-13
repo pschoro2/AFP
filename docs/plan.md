@@ -172,6 +172,8 @@ UI must show:
 Executor agent receives one approved task plan and must:
 
 - modify only in-scope files;
+- load and apply relevant skills before implementation when the task matches a skill workflow;
+- choose the correct coding agent for the directory being changed so folder-level conventions and constraints are respected;
 - add or update unit tests;
 - run formatting and linting;
 - run unit tests inside a container;

@@ -31,6 +31,7 @@ We will execute across seven coordinated tracks.
 4. **Quality Gates and Policy**
    - Unit/integration/eval evidence ingestion
    - Policy engine rules and block conditions
+   - Skill-selection and folder-scoped agent-selection compliance checks for coding tasks
    - Merge recommendation and enforcement flow
 
 5. **Developer Workflow Integration**
