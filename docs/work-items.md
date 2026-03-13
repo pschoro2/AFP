@@ -29,9 +29,9 @@ Expose minimum control plane and async task dispatch surface.
 ### Tasks
 - [ ] E2-T1 Scaffold API service and health endpoint.
 - [ ] E2-T2 Add `POST /runs` and `GET /runs/{run_id}` endpoints.
-- [ ] E2-T3 Add `GET /runs/{run_id}/tasks` endpoint.
-- [ ] E2-T4 Add queue envelope schema including retry metadata.
-- [ ] E2-T5 Add worker loop that emits transition events to workflow engine.
+- [x] E2-T3 Add `GET /runs/{run_id}/tasks` endpoint.
+- [x] E2-T4 Add queue envelope schema including retry metadata.
+- [x] E2-T5 Add worker loop that emits transition events to workflow engine.
 
 ### Dependencies
 - Depends on E1 transition contracts and schema.
