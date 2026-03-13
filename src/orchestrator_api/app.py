@@ -4,10 +4,12 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from agent_runner import InMemoryQueue, QueueEnvelope
 from workflow_engine import LifecycleState
+from workflow_engine.events import QueueEnvelope, WorkflowEvent
+from workflow_engine.worker import InMemoryQueue, drain_worker_once
 
 
 @dataclass
@@ -69,7 +71,7 @@ def health() -> tuple[dict[str, str], int]:
 @app.post("/runs")
 def create_run() -> tuple[dict[str, str | list[dict[str, str | int]]], int]:
     run_id = uuid4()
-    run = Run(id=run_id, title="seed-run", state=LifecycleState.NEW)
+    run = Run(id=run_id, title=title, state=LifecycleState.NEW)
     RUNS[str(run_id)] = run
 
     task = Task(id=uuid4(), run_id=run_id, name="bootstrap-task", state=LifecycleState.READY)
