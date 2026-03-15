@@ -1,8 +1,7 @@
 import unittest
-
 from uuid import uuid4
 
-from orchestrator_api.app import EVENTS, QUEUE, RUNS, TASKS, app
+from orchestrator_api.app import ARTEFACTS, EVENTS, QUEUE, RUNS, TASKS, app
 from workflow_engine import LifecycleState, QueueEnvelope, apply_transition
 
 
@@ -11,6 +10,7 @@ class MilestoneATests(unittest.TestCase):
         self.client = app.test_client()
         RUNS.clear()
         TASKS.clear()
+        ARTEFACTS.clear()
         EVENTS.clear()
         while QUEUE.dequeue() is not None:
             pass
@@ -35,7 +35,7 @@ class MilestoneATests(unittest.TestCase):
         list_resp = self.client.get(f"/runs/{run_id}/tasks")
         self.assertEqual(list_resp.status_code, 200)
         tasks = list_resp.get_json()
-        self.assertEqual(len(tasks), 1)
+        self.assertEqual(len(tasks), 2)
 
         drain_resp = self.client.post("/workers/drain-once")
         self.assertEqual(drain_resp.status_code, 200)
@@ -52,6 +52,37 @@ class MilestoneATests(unittest.TestCase):
         envelope = QueueEnvelope(run_id=uuid4(), task_id=uuid4(), attempt=1, max_retries=3)
         second = envelope.next_attempt()
         self.assertEqual(second.attempt, 2)
+
+    def test_artefact_registration_and_lookup(self):
+        run_resp = self.client.post("/runs", json={"title": "demo"})
+        run_id = run_resp.get_json()["id"]
+
+        task_resp = self.client.post(
+            f"/runs/{run_id}/tasks",
+            json={"name": "build", "max_retries": 2},
+        )
+        task_id = task_resp.get_json()["id"]
+
+        create_artefact_resp = self.client.post(
+            "/artefacts",
+            json={
+                "run_id": run_id,
+                "task_id": task_id,
+                "path": "artifacts/unit-test-report.json",
+                "checksum": "abc123",
+                "version": "v1",
+                "producer": "executor",
+                "metadata": {"kind": "test_report"},
+            },
+        )
+        self.assertEqual(create_artefact_resp.status_code, 201)
+
+        artefacts_resp = self.client.get(f"/runs/{run_id}/artefacts")
+        self.assertEqual(artefacts_resp.status_code, 200)
+        artefacts = artefacts_resp.get_json()
+        self.assertEqual(len(artefacts), 1)
+        self.assertEqual(artefacts[0]["task_id"], task_id)
+        self.assertEqual(artefacts[0]["producer"], "executor")
 
 
 if __name__ == "__main__":

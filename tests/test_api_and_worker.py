@@ -31,9 +31,9 @@ class ApiTests(unittest.TestCase):
         get_tasks_response = self.client.get(f"/runs/{run_id}/tasks")
         self.assertEqual(get_tasks_response.status_code, 200)
         tasks_body = get_tasks_response.get_json()
-        self.assertEqual(tasks_body["run_id"], run_id)
-        self.assertEqual(len(tasks_body["tasks"]), 1)
-        self.assertEqual(tasks_body["tasks"][0]["state"], "ready")
+        self.assertEqual(len(tasks_body), 1)
+        self.assertEqual(tasks_body[0]["run_id"], run_id)
+        self.assertEqual(tasks_body[0]["state"], "ready")
 
 
 class WorkerLoopTests(unittest.TestCase):
