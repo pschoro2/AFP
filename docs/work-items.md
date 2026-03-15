@@ -8,13 +8,13 @@ This backlog operationalizes `technical-plan.md` into trackable epics and tasks.
 Establish deterministic workflow persistence and transition authority.
 
 ### Tasks
-- [ ] E1-T1 Define schema for `runs`, `tasks`, `task_dependencies`.
-- [ ] E1-T2 Define schema for `approvals`, `artefacts`, `executions`.
-- [ ] E1-T3 Define schema for `logs`, `eval_runs`, `policy_decisions`.
-- [ ] E1-T4 Implement lifecycle enum and transition map in workflow engine.
-- [ ] E1-T5 Implement transition validator with machine-readable reason codes.
-- [ ] E1-T6 Add restart-recovery scenario test for synthetic run progression.
-- [ ] E1-T7 Add execution-policy checks for required skill usage and correct folder-scoped agent selection during coding tasks.
+- [x] E1-T1 Define schema for `runs`, `tasks`, `task_dependencies`.
+- [x] E1-T2 Define schema for `approvals`, `artefacts`, `executions`.
+- [x] E1-T3 Define schema for `logs`, `eval_runs`, `policy_decisions`.
+- [x] E1-T4 Implement lifecycle enum and transition map in workflow engine.
+- [x] E1-T5 Implement transition validator with machine-readable reason codes.
+- [x] E1-T6 Add restart-recovery scenario test for synthetic run progression.
+- [x] E1-T7 Add execution-policy checks for required skill usage and correct folder-scoped agent selection during coding tasks.
 
 ### Dependencies
 - None (foundation epic).
@@ -28,8 +28,8 @@ Establish deterministic workflow persistence and transition authority.
 Expose minimum control plane and async task dispatch surface.
 
 ### Tasks
-- [ ] E2-T1 Scaffold API service and health endpoint.
-- [ ] E2-T2 Add `POST /runs` and `GET /runs/{run_id}` endpoints.
+- [x] E2-T1 Scaffold API service and health endpoint.
+- [x] E2-T2 Add `POST /runs` and `GET /runs/{run_id}` endpoints.
 - [x] E2-T3 Add `GET /runs/{run_id}/tasks` endpoint.
 - [x] E2-T4 Add queue envelope schema including retry metadata.
 - [x] E2-T5 Add worker loop that emits transition events to workflow engine.
@@ -46,10 +46,10 @@ Expose minimum control plane and async task dispatch surface.
 Persist auditable artefact metadata linked to run/task lifecycle.
 
 ### Tasks
-- [ ] E3-T1 Add artefact registration endpoint.
-- [ ] E3-T2 Persist path/checksum/version/producer metadata.
-- [ ] E3-T3 Link artefacts to run/task context.
-- [ ] E3-T4 Add retrieval query for artefacts by run and task.
+- [x] E3-T1 Add artefact registration endpoint.
+- [x] E3-T2 Persist path/checksum/version/producer metadata.
+- [x] E3-T3 Link artefacts to run/task context.
+- [x] E3-T4 Add retrieval query for artefacts by run and task.
 
 ### Dependencies
 - Depends on E1 core schema.
